@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const http          = require('http');
-const api           = require('./src/front-end');
+const api           = require('./front-end.js');
 const pino          = require('pino')({
     level: process.env.LOG_LEVEL
 });

@@ -1,0 +1,21 @@
+{
+  "log": [
+    {
+      "time": "2022-10-18T18:11:05Z",
+      "type": "push",
+      "user": {
+        "id": 9,
+        "name": "Charlie Parker",
+        "email": "cp1@example.com",
+        "phone": "489.456.7890",
+        "channels": [
+          3
+        ],
+        "subscribed": [
+          1
+        ]
+      },
+      "message": "sadasd"
+    }
+  ]
+}
