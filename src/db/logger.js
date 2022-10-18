@@ -1,23 +1,24 @@
 import { join, dirname } from 'path';
-import { Low, JSONFile } from 'lowdb';
+import { LowSync, JSONFileSync } from 'lowdb';
 import { fileURLToPath } from 'url';
 import NotificationTypes from '../notification-types.js';
 import moment from 'moment';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const logDb     = join(__dirname, 'log.json');
-const adapter   = new JSONFile(logDb);
-const low       = new Low(adapter);
+const logDb     = join(__dirname, '../../log.json');
+const adapter   = new JSONFileSync(logDb);
+const low       = new LowSync(adapter);
 
 const logger    = {
-    read: async () => {
-        await low.read();
-        low.data ||= { "log": [] };
-        return low.data;
+    getLogs: () => {
+        logger.read();
+        return low.data.log;
     },
-    write: async (channel, user, message) => {
-        let logs = await logger.read();
-        console.info(logs);
+    read: () => {
+        low.read();
+        low.data ||= { "log": [] };
+    },
+    push: (category, channel, user, message) => {
         const type = NotificationTypes.find(type => type.id === channel);
 
         if (!type) {
@@ -25,15 +26,15 @@ const logger    = {
             return;
         }
 
-        logs.log.push({
+        low.data.log.push({
             time: moment().utc().format(),
-            type: type.name,
+            notificationType: type.name,
+            messageCategory: category,
             user,
             message
         });
-
-        await low.write();
-    }
+    },
+    write: () => low.write()
 }
 
 export default logger;

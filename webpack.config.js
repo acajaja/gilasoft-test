@@ -15,7 +15,8 @@ module.exports = (env, argv) => {
     devtool: process.env.NODE_ENV === 'production' ? 'source-map' : 'inline-source-map',
     mode: process.env.NODE_ENV,
     entry: {
-      api: `${baseJsDir}/http/api.js`
+      api: `${baseJsDir}/http/api.js`,
+      frontend: `${baseJsDir}/http/server.js`,
     },
     output: {
       clean: true,

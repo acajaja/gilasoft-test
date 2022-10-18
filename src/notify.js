@@ -3,11 +3,15 @@ import logger from './db/logger.js';
 
 const notify = async (category, message) => {
     const subscribed = await users.findByCategory(category);
+    logger.read();
+
     subscribed.forEach(user => {
         user.channels.forEach(async (channel) => {
-            await logger.write(channel, user, message);
+            logger.push(category, channel, user, message);
         });
     });
+
+    logger.write();
 }
 
 export default notify;

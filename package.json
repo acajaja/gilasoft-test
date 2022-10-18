@@ -7,9 +7,9 @@
     "build:dev": "NODE_ENV=development webpack",
     "build:watch": "NODE_ENV=development webpack -w",
     "prestart": "npm run build",
-    "dev:run": "NODE_ENV=development concurrently \"nodemon -V ./src/http/server.js\" \"nodemon -V ./dist/js/api.bundle.js\"",
-    "dev:watch": "NODE_ENV=development concurrently \"nodemon -w src -w public -V ./src/http/server.js\" \"nodemon -w src -w dist -V ./dist/js/api.bundle.js\"",
-    "start": "concurrently node ./src/http/server.js node ./dist/js/api.bundle.js",
+    "dev:run": "NODE_ENV=development concurrently \"nodemon -V ./dist/js/frontend.bundle.js\" \"nodemon -V ./dist/js/api.bundle.js\"",
+    "dev:watch": "NODE_ENV=development concurrently \"nodemon -w src -w public -V -e js ./dist/js/frontend.bundle.js\" \"nodemon -e js -w src -w dist -V ./dist/js/api.bundle.js\"",
+    "start": "concurrently \"node ./dist/js/frontend.bundle.js\" \"node ./dist/js/api.bundle.js\"",
     "test": "jest"
   },
   "engine": {

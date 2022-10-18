@@ -1,5 +1,4 @@
 import notify from '../notify.js';
-
 require('dotenv').config();
 const express               = __non_webpack_require__('express');
 const bodyParser            = require('body-parser');
@@ -11,9 +10,18 @@ const backend               = express();
 backend.use(pino);
 
 /**
+ * favicon route.
+ * Passes the request on through.
+ */
+backend.use('/favicon.ico', function (req, res, next) {
+    res.sendStatus(204);
+    next();
+});
+
+/**
  * Send message handler
  */
-backend.post('/process-message', urlencodedParser, async function (req, res) {
+backend.post('/process-message', urlencodedParser, async (req, res) => {
     const message = req.body.message ||= '';
 
     if (!message) {
@@ -26,7 +34,7 @@ backend.post('/process-message', urlencodedParser, async function (req, res) {
     await notify(selectedCategory, message);
 
     res.status(200)
-        .send('asdsdas');
+        .send('Message sent');
 });
 
 export default backend;
