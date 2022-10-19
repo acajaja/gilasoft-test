@@ -7,4 +7,4 @@ const pino          = require('pino')({
 const server        = http.createServer(app);
 
 server.listen(process.env.NODE_DOCKER_PORT);
-pino.info(`Front-end server running at http://${process.env.APP_HOST}:${process.env.NODE_DOCKER_PORT}/`);
+pino.info(`Front-end server running at http://${process.env.APP_HOST}:${process.env.NODE_LOCAL_PORT}/`);
