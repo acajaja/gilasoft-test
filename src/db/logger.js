@@ -6,6 +6,7 @@ import moment from 'moment';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const logDb     = join(__dirname, '../../log.json');
+console.info(logDb);
 const adapter   = new JSONFileSync(logDb);
 const low       = new LowSync(adapter);
 
@@ -26,7 +27,7 @@ const logger    = {
             return;
         }
 
-        low.data.log.push({
+        low.data.log.unshift({
             time: moment().utc().format(),
             notificationType: type.name,
             messageCategory: category,

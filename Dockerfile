@@ -2,6 +2,7 @@ FROM node:18
 
 WORKDIR /
 COPY package.json .
-RUN npm install
+COPY src/log.json.template ./log.json
+RUN npm install --omit=dev
 COPY . .
-CMD npm run dev:watch
+CMD npm run start

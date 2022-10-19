@@ -1,0 +1,39 @@
+mixin userInfo(user, row)
+    p #{user.name} #[button(class="user-button" data-id=row) show]
+        user-info(id=row class="hide")
+            | #[br]ID: #{user.id}
+            | #[br]Email: #{user.email}
+            | #[br]Phone: #{user.phone}
+            | #[br]Channels: #{user.channels}
+            | #[br]Subscribed: #{user.subscribed}
+
+doctype html
+html(lang='en-US')
+    head
+        meta(charset="utf-8")
+        title GilaSoftware Test
+        link(href="/styles/styles.css" rel="stylesheet" type="text/css")
+        script(src="/js/app.js" type="text/javascript")
+    body
+        header
+            section
+                h1 GilaSoftware Test
+        section
+            h2 Log History
+            gst-logs
+                table(style="width: 100%")
+                    thead
+                        tr
+                            th Time (UTC)
+                            th Notifictation Type
+                            th Category
+                            th User
+                            th Message
+                    tbody
+                        each entry, i in logs
+                            tr
+                                td= entry.time
+                                td= entry.notificationType
+                                td= entry.messageCategory
+                                td: +userInfo(entry.user, i)
+                                td= entry.message

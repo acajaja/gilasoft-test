@@ -1,0 +1,22 @@
+doctype html
+html(lang='en-US')
+    head
+        meta(charset="utf-8")
+        title GilaSoftware Notification Test
+    body
+        form(action=endpoint method="post" enctype="application/x-www-form-urlencoded")
+            fieldset
+                legend Submission Form
+                div
+                    label Category:
+                        select(name="category")
+                            option Select category
+                            option(value="1") Finance
+                            option(value="2") Movies
+                            option(value="3") Sports
+                div
+                    label Message:
+                        br
+                        textarea(name="message")
+                div
+                    button(type="submit") Send

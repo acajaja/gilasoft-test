@@ -1,27 +1,49 @@
+import logger from '../db/logger.js';
 import notify from '../notify.js';
 require('dotenv').config();
 const express               = __non_webpack_require__('express');
 const bodyParser            = require('body-parser');
-const urlencodedParser      = bodyParser.urlencoded({ extended: false })
+const urlencodedParser      = bodyParser.urlencoded({ extended: false });
 const pino                  = require('pino-http')({
     level: process.env.LOG_LEVEL
 });
-const backend               = express();
-backend.use(pino);
+const server              = express();
+server.use(pino)
+server.use(express.static('public'));
+server.set('view engine', 'pug');
+server.set('views', './src/views');
 
 /**
  * favicon route.
  * Passes the request on through.
  */
-backend.use('/favicon.ico', function (req, res, next) {
+server.use('/favicon.ico', (req, res, next) => {
     res.sendStatus(204);
     next();
 });
 
 /**
+ * Message form route
+ */
+server.get('/', (req, res) => {
+    res.render('form', {
+        endpoint: '/process-message'
+    });
+});
+
+/**
+ * Message form route
+ */
+server.get('/logs', async (req, res) => {
+    const logs = logger.getLogs();
+
+    res.render('logs', {logs});
+});
+
+/**
  * Send message handler
  */
-backend.post('/process-message', urlencodedParser, async (req, res) => {
+server.post('/process-message', urlencodedParser, async (req, res) => {
     const message = req.body.message ||= '';
 
     if (!message) {
@@ -37,4 +59,4 @@ backend.post('/process-message', urlencodedParser, async (req, res) => {
         .send('Message sent');
 });
 
-export default backend;
+export default server;
