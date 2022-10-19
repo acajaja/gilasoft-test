@@ -9,7 +9,7 @@
 2. Clone this repository to your local machine.
 3. Open a terminal
 4. `cd gilasoft-test`
-5. `docker compose up --build`
+5. `docker-compose up --build`
 
 ## Front End Nav
 The message form is at:
