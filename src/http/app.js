@@ -29,7 +29,6 @@ server.use('/favicon.ico', (req, res, next) => {
  */
 server.get('/', (req, res) => {
     res.render('form', {
-        endpoint: '/process-message',
         categories
     });
 });
@@ -62,8 +61,7 @@ server.post('/process-message', urlencodedParser, async (req, res) => {
 
     await notify(selectedCategory, message);
 
-    res.status(200)
-        .send('Message sent');
+    res.render('success');
 });
 
 export default server;

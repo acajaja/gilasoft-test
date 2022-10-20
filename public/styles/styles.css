@@ -12,6 +12,14 @@ user-info {
     display: block;
 }
 
+header {
+    display: block;
+    margin-bottom: 12px;
+}
+section {
+    display: block;
+}
+
 .hide {
     display: none;
 }
