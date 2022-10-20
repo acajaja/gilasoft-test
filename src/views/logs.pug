@@ -1,25 +1,48 @@
+mixin catName(category)
+    td #{category.name}
+
+mixin userChannels(chnls)
+    - names = []
+    each id, i in chnls
+        - names.push(channels.find(channel => channel.id === id).name)
+
+    = names.join(', ')
+
+mixin userCats(subscribed)
+    - names = []
+    each id, i in subscribed
+        - names.push(categories.find(cat => cat.id === id).name)
+
+    = names.join(', ')
+
 mixin userInfo(user, row)
-    p #{user.name} #[button(class="user-button" data-id=row) show]
-        user-info(id=row class="hide")
-            | #[br]ID: #{user.id}
-            | #[br]Email: #{user.email}
-            | #[br]Phone: #{user.phone}
-            | #[br]Channels: #{user.channels}
-            | #[br]Subscribed: #{user.subscribed}
+    td
+        p #{user.name} #[button(class="user-button" data-id=row) show]
+            user-info(id=row class="hide")
+                | #[br]ID: #{user.id}
+                | #[br]Email: #{user.email}
+                | #[br]Phone: #{user.phone}
+                | #[br]Channels: 
+                +userChannels(user.channels)
+                | #[br]Subscribed: 
+                +userCats(user.subscribed)
 
 doctype html
 html(lang='en-US')
     head
         meta(charset="utf-8")
-        title GilaSoftware Test
+        title GilaSoftware Notification Test | Log
         link(href="/styles/styles.css" rel="stylesheet" type="text/css")
         script(src="/js/app.js" type="text/javascript")
     body
         header
             section
                 h1 GilaSoftware Test
+            nav
+                a(href="/" title="Message Form") &lt;&lt; back to form
         section
             h2 Log History
+
             gst-logs
                 table(style="width: 100%")
                     thead
@@ -34,6 +57,6 @@ html(lang='en-US')
                             tr
                                 td= entry.time
                                 td= entry.notificationType
-                                td= entry.messageCategory
-                                td: +userInfo(entry.user, i)
+                                +catName(categories.find(cat => cat.id === entry.messageCategory))
+                                +userInfo(entry.user, i)
                                 td= entry.message

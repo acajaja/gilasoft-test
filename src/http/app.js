@@ -1,5 +1,7 @@
 import logger from '../db/logger.js';
 import notify from '../notify.js';
+import categories from '../categories.js';
+import channels from '../channels.js';
 require('dotenv').config();
 const express               = __non_webpack_require__('express');
 const bodyParser            = require('body-parser');
@@ -27,7 +29,8 @@ server.use('/favicon.ico', (req, res, next) => {
  */
 server.get('/', (req, res) => {
     res.render('form', {
-        endpoint: '/process-message'
+        endpoint: '/process-message',
+        categories
     });
 });
 
@@ -37,7 +40,11 @@ server.get('/', (req, res) => {
 server.get('/logs', async (req, res) => {
     const logs = logger.getLogs();
 
-    res.render('logs', {logs});
+    res.render('logs', {
+        logs,
+        categories,
+        channels
+    });
 });
 
 /**
